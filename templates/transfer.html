@@ -1,0 +1,207 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel=”stylesheet” href=”css/bootstrap-responsive.css”>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+.navbar-brand
+{
+  font-family: 'Lato', sans-serif;
+  color:black;
+  font-size: 40px;
+
+}
+.navbar-br
+{
+  font-family: 'Lato', sans-serif;
+  color: #fff;
+  font-size: 25px;
+  margin-right:10px;
+
+}
+.navbar-br:hover{
+	color:blue;
+	border-radius: 8px;
+	transition: .4s;
+
+}
+       .button{
+        transition: 1.5s;
+         background-color:#000;
+
+      }
+      button:hover{
+        background-color:#red;
+        color: white;
+      }
+      .ab{
+ .font-size: 40px;
+  font-weight: 200;
+  color: white;
+  text-align:center;
+  margin-top: 90px;
+  background-color: black;
+  font-family:Audiowide;
+}
+.h2{
+	font-size: 30px;
+}
+.table{
+	letter-spacing: 1.2px;
+	color: Black;
+	font-size: 18px;
+	text-align: center;
+}
+.td{
+	text-align: center;
+}
+.button{
+	border:none;
+	background: #d9d9d9;
+    transition: 1s;
+}
+@media only screen and (orientation: portrait){
+	*{
+		letter-spacing: 1px;
+	}
+}
+#mymodal{
+width: 500px;
+padding: 20px 20px 20px 20px;
+}
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="{{ url_for('main')}}">ASM Bank</a>
+    </div>
+    <ul class="nav navbar-nav  navbar-right  ">
+    <li class="navbar-br active"><a href="{{ url_for('main')}}">Back</a></li>
+    </ul>
+
+  </div>
+</nav>
+<div class="container">
+    <form action="" method="post">
+        <h1 class="ab">Transfer Money</h1>
+       <div class="text-right"><a href="#mymodal" class="btn btn-warning " data-toggle="modal" >Add Customer</a>
+       <a href="#exampleModal" class="btn btn-primary text-right"  data-toggle="modal">New Transfer</a>
+       </div>
+
+        <br>
+            <div class="row">
+                <div class="col">
+                    <div class="table-responsive-sm">
+                    <table class="table table-hover table-sm table-striped table-condensed table-bordered">
+                        <thead>
+                            <tr>
+                            <th scope="col" class="text-center py-2">Id</th>
+                            <th scope="col" class="text-center py-2">Name</th>
+                            <th scope="col" class="text-center py-2">E-Mail</th>
+                            <th scope="col" class="text-center py-2">Balance</th>
+                            </tr>
+                        </thead>
+                        {% for row in customer %}
+                    <tr>
+                        <td class="py-2">{{row.0}}</td>
+                        <td class="py-2">{{row.1}}</td>
+                        <td class="py-2">{{row.2}}</td>
+                        <td class="py-2">{{row.3}}</td>
+                    </tr>
+                        {% endfor %}
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </form> </div>
+
+
+<div id="mymodal" class="modal fade " role="dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title">Please Insert Data </h4>
+        </div>
+        <div class="modal-body">
+            <form action="{{url_for('insert')}}"  method="post">
+                <div class="form-group">
+                    <label>Name:</label><input type="text" class="form-control" name="name" required>
+                </div>
+                 <div class="form-group">
+                    <label>Email:</label><input type="email" class="form-control" name="email" required>
+                </div>
+                 <div class="form-group">
+                    <label>Deposit:</label><input type="text" class="form-control" name="amount" required>
+                </div>
+                 <div class="form-group">
+                     <button class="btn btn-primary" onclick="return confirm('Are You Sure to Add ?')"  type="submit">Add User</button>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" id="exampleModalLabel">ADD Details..</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+            <div class="modal-body">
+                <form action="/moneyTransfer" method="POST">
+                    <div class="row">
+                        <div class="col col-lg-6">
+                            <label>Sender ID</label>
+                            <input name="id" required type="text" class="form-control" placeholder="Ex: Aakansha" >
+                        </div>
+                        <div class="col col-lg-6">
+                            <label>Receiver Name</label>
+                            <input name="name" required type="text" class="form-control" placeholder="Ex: Sanika" >
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col col-lg-4">
+                            <label >Receiver Email</label>
+                            <input name="email" required type="text" maxlength="40" class="form-control" placeholder="abc@gmail.com" >
+                        </div>
+                        <div class="col col-lg-4">
+                            <label >Receiver ID</label>
+                            <input  required type="text" class="form-control" placeholder="Ex: 5" >
+                        </div>
+                        <div class="col col-lg-4">
+                            <label >Amount (INR)</label>
+                            <input name="amount" type="text" required class="form-control" placeholder="Ex: 2500">
+                         </div>
+                    </div><br>
+                    <div class="modal-footer">
+                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                         <button type="submit" class="btn btn-primary" onclick="return confirm('Are You Sure to Transfer ?')" >Transfer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+</body>
+</html>
