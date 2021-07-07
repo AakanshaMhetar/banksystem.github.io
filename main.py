@@ -80,4 +80,4 @@ def hist():
     return render_template('history.html', history=data)
 
 
-app.run(debug=True)
+app.run(debug=False , host='0.0.0.0')
